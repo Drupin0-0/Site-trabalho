@@ -1,0 +1,176 @@
+<div class="main-container">
+    <div class='planet-container'>
+        <div class='night'></div>
+        <div class='day'></div>
+        <div class='clouds'></div>
+        <div class='inner-shadow'></div>
+    </div>
+
+    <div class="welcome-box">
+        <h1>BEM-VINDO, <span>{{ user.username|default:"EXPLORADOR" }}</span></h1>
+       
+        
+    </div>
+</div>
+
+<style>
+    /* SEUS ESTILOS DO PLANETA (SEM ALTERAÇÕES) */
+    body {
+        align-items: center;
+        background-color: #000;
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .planet-container {
+        border-radius: 50%;
+        box-shadow: 5px -3px 10px 3px #5e90f1;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+        width: 500px;
+        z-index: 1;
+    }
+    .night {
+        animation: rotate-night 80s linear infinite;
+        background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_nightmap.jpg);
+        background-size: 200%;
+        height: 500px;
+        position: absolute;
+        width: 500px;
+        z-index: 2;
+    }
+    .day {
+        animation: rotate-day 80s linear infinite;
+        background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg);
+        background-size: 200%;
+        border-left: solid 1px black;
+        border-radius: 50%;
+        box-shadow: 5px 0 20px 10px #040615 inset; 
+        height: 500px;
+        margin-left: 110px;
+        position: absolute;
+        width: 500px;
+        z-index: 3;
+    }
+    .clouds {
+        animation: rotate-day 50s linear infinite, spin-clouds 100s ease infinite;
+        background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg);
+        background-size: 200%;
+        border-radius: 50%;    
+        box-shadow: 5px 0 20px 10px #040615 inset, -9px 0px 20px 10px #5e90f1 inset;
+        height: 500px;
+        margin-left: 100px;
+        opacity: 0.45;
+        position: absolute;
+        width: 500px;
+        z-index: 4;
+    }
+    .inner-shadow {
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: -5px 0 10px 1px #152b57 inset, 5px 0 10px 1px #040615 inset;
+        height: 500px;
+        margin-left: 0;
+        position: absolute;
+        width: 500px;
+        z-index: 5;
+    }
+
+    /* ESTILO DO TEXTO "BONITÃO" */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .welcome-box {
+        position: absolute;
+        z-index: 10; /* Fica na frente do planeta */
+        text-align: center;
+        background: rgba(255, 255, 255, 0.05); /* Efeito Vidro */
+        backdrop-filter: blur(10px);
+        padding: 50px 70px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 200;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+    }
+
+    h1 span {
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #5e90f1; /* Cor combinando com o brilho da terra */
+        text-shadow: 0 0 20px rgba(94, 144, 241, 0.5);
+    }
+
+    p {
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        background: #5e90f1;
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-secondary {
+        border: 1px solid #ff4d4d;
+        color: #ff4d4d;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover { background: #4a76c9; transform: translateY(-3px); }
+    .btn-secondary:hover { background: #ff4d4d; color: white; }
+
+    /* ANIMAÇÕES */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes rotate-day {
+        0% { background-position: 120% 0; }
+        100% { background-position: -80% 0; }
+    }
+    @keyframes rotate-night {
+        0% { background-position: calc(120% + 120px) 0; }
+        100% { background-position: calc(-80% + 120px) 0; }
+    }
+    @keyframes spin-clouds {
+        0% { transform: rotate(0deg); }
+        50% { transform: rotate(20deg); }
+        100% { transform: rotate(0deg); }
+    }
+</style>

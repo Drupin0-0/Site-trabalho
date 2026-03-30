@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model # Use isso em vez de importar User
 from .forms import CadastroForm, LoginForm
+
+# Isso pega automaticamente o seu 'core.Usuario' definido no settings.py
+User = get_user_model()
 
 def cadastro(request):
     if request.method == 'POST':
@@ -18,17 +23,30 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            login_data = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             
+            username = login_data
+            if "@" in login_data:
+                try:
+                    # Agora ele busca no seu modelo core.Usuario corretamente
+                    user_obj = User.objects.get(email=login_data)
+                    username = user_obj.username
+                except User.DoesNotExist:
+                    pass 
+
             user = authenticate(request, username=username, password=password)
             
             if user is not None:
-                auth_login(request, user) # Cria a sessão do usuário
-                return redirect('home') # Mande para a sua página inicial
+                auth_login(request, user)
+                return redirect('bemvindo')
             else:
                 form.add_error(None, "Usuário ou senha inválidos")
     else:
         form = LoginForm()
     
     return render(request, 'core/login.html', {'form': form})
+
+@login_required
+def BemVindo(request):
+    return render(request, 'core/Boasvindas.html')
