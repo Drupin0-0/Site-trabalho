@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <title>Criar Conta</title>
+</head>
+<body>
+
+    <img class="mars-bg" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/62921/mars2-black.jpg" alt="Mars" />
+
+    <div class="alpha mars-interface">
+        <form method="post" class="tech-form">
+            {% csrf_token %}
+            
+            <div class="interface-header">
+                <span class="status-dot"></span>
+                <h1>Criar Conta</h1>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="error-group">
+                    {% for error in form.non_field_errors %}
+                        <span class="error-msg" style="display: block; text-align: center; margin-bottom: 10px;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <div class="form-body">
+                {% for field in form %}
+                    <div class="input-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label|upper }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <span class="error-msg">{{ field.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn-mars">Criar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.alpha').addClass('in');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
