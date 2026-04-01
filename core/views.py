@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model # Use isso em vez de importar User
 from .forms import CadastroForm, LoginForm
 
-# Isso pega automaticamente o seu 'core.Usuario' definido no settings.py
 User = get_user_model()
 
 def cadastro(request):
@@ -50,3 +49,7 @@ def login_view(request):
 @login_required
 def BemVindo(request):
     return render(request, 'core/Boasvindas.html')
+
+
+def home_view(request):
+    return render(request, 'core/home.html')

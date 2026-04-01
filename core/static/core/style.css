@@ -1,3 +1,4 @@
+
 body, html {
     height: 100vh;
     margin: 0;
@@ -32,13 +33,12 @@ body, html {
     background: rgba(10, 10, 10, 0.85);
     border: 1px solid #a03c28;
     padding: 30px;
-    width: 380px;
+    width: 780px;
     border-radius: 4px;
     box-shadow: 0 0 20px rgba(160, 60, 40, 0.4);
     opacity: 0;
     transform: scale(1.2);
-    filter: blur(15px);
-    transition: opacity 2s ease-out, transform 2s ease-out, filter 1.5s ease-out;
+    
 }
 
 .alpha.in {
@@ -87,10 +87,11 @@ body, html {
 .input-group {
     display: flex;
     flex-direction: column;
+    color: wheat;
 }
 
 .input-group label {
-    color: #a03c28;
+    color: white;
     font-size: 0.75rem;
     margin-bottom: 5px;
     font-weight: bold;
