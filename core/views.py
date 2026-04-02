@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model # Use isso em vez de importar User
+from django.contrib.auth import get_user_model 
 from .forms import CadastroForm, LoginForm
 
 User = get_user_model()
@@ -20,36 +20,36 @@ def cadastro(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            login_data = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            
-            username = login_data
-            if "@" in login_data:
-                try:
-                    # Agora ele busca no seu modelo core.Usuario corretamente
-                    user_obj = User.objects.get(email=login_data)
-                    username = user_obj.username
-                except User.DoesNotExist:
-                    pass 
+       
+        login_data = request.POST.get('email') or ''
+        password = request.POST.get('password') or ''
+        
+        username = login_data
+        
+        if "@" in login_data:
+            try:
+                user_obj = User.objects.get(email=login_data)
+                username = user_obj.username
+            except User.DoesNotExist:
+                pass 
 
-            user = authenticate(request, username=username, password=password)
-            
-            if user is not None:
-                auth_login(request, user)
-                return redirect('bemvindo')
-            else:
-                form.add_error(None, "Usuário ou senha inválidos")
-    else:
-        form = LoginForm()
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            auth_login(request, user)
+            return redirect('bemvindo')
+        else:
+            return render(request, 'core/login.html', {'error': "Usuário ou senha inválidos"})
     
-    return render(request, 'core/login.html', {'form': form})
+    return render(request, 'core/login.html')
 
-@login_required
+@login_required(login_url='login')
 def BemVindo(request):
     return render(request, 'core/Boasvindas.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def home_view(request):
     return render(request, 'core/home.html')

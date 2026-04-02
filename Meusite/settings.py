@@ -117,3 +117,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'core.Usuario'
+LOGOUT_REDIRECT_URL = 'pagina_inicial'
+LOGIN_REDIRECT_URL = 'bemvindo'
+LOGIN_URL = 'login'

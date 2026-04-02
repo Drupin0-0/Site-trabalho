@@ -8,8 +8,16 @@
 
     <div class="welcome-box">
         <h1>BEM-VINDO, <span>{{ user.username|default:"EXPLORADOR" }}</span></h1>
-       
-        
+        <p>Sua jornada espacial continua...</p>
+
+        <div class="btn-group">
+            <a href="{% url 'pagina_inicial' %}" class="btn-primary">ACESSAR PAINEL</a>
+            
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary">SAIR DA CONTA</button>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -21,9 +29,12 @@
         height: 100vh;
         justify-content: center;
         margin: 0;
+        padding: 0;
         overflow: hidden;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+    /* CONTAINER DO PLANETA */
     .planet-container {
         border-radius: 50%;
         box-shadow: 5px -3px 10px 3px #5e90f1;
@@ -33,6 +44,7 @@
         width: 500px;
         z-index: 1;
     }
+
     .night {
         animation: rotate-night 80s linear infinite;
         background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_nightmap.jpg);
@@ -42,6 +54,7 @@
         width: 500px;
         z-index: 2;
     }
+
     .day {
         animation: rotate-day 80s linear infinite;
         background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg);
@@ -55,6 +68,7 @@
         width: 500px;
         z-index: 3;
     }
+
     .clouds {
         animation: rotate-day 50s linear infinite, spin-clouds 100s ease infinite;
         background-image: url(https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg);
@@ -68,6 +82,7 @@
         width: 500px;
         z-index: 4;
     }
+
     .inner-shadow {
         background: transparent;
         border-radius: 50%;
@@ -79,7 +94,7 @@
         z-index: 5;
     }
 
-    /* ESTILO DO TEXTO "BONITÃO" */
+    /* EFEITO DE VIDRO (GLASSMORPHISM) */
     .main-container {
         display: flex;
         justify-content: center;
@@ -91,10 +106,11 @@
 
     .welcome-box {
         position: absolute;
-        z-index: 10; /* Fica na frente do planeta */
+        z-index: 10;
         text-align: center;
-        background: rgba(255, 255, 255, 0.05); /* Efeito Vidro */
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         padding: 50px 70px;
         border-radius: 30px;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -115,20 +131,23 @@
         display: block;
         font-size: 3.5rem;
         font-weight: 800;
-        color: #5e90f1; /* Cor combinando com o brilho da terra */
+        color: #5e90f1;
         text-shadow: 0 0 20px rgba(94, 144, 241, 0.5);
     }
 
     p {
         color: rgba(255, 255, 255, 0.6);
         letter-spacing: 2px;
+        margin-top: 10px;
         margin-bottom: 30px;
     }
 
+    /* BOTÕES */
     .btn-group {
         display: flex;
         gap: 15px;
         justify-content: center;
+        align-items: center;
     }
 
     .btn-primary {
@@ -138,20 +157,36 @@
         text-decoration: none;
         border-radius: 8px;
         font-weight: 600;
+        border: none;
         transition: 0.3s;
     }
 
     .btn-secondary {
+        background: transparent;
         border: 1px solid #ff4d4d;
         color: #ff4d4d;
         padding: 12px 25px;
         text-decoration: none;
         border-radius: 8px;
+        font-weight: 600;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
         transition: 0.3s;
     }
 
-    .btn-primary:hover { background: #4a76c9; transform: translateY(-3px); }
-    .btn-secondary:hover { background: #ff4d4d; color: white; }
+    .btn-primary:hover { 
+        background: #4a76c9; 
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(94, 144, 241, 0.4);
+    }
+
+    .btn-secondary:hover { 
+        background: #ff4d4d; 
+        color: white; 
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 77, 77, 0.4);
+    }
 
     /* ANIMAÇÕES */
     @keyframes fadeIn {
