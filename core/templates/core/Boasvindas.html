@@ -8,10 +8,8 @@
 
     <div class="welcome-box">
         <h1>BEM-VINDO, <span>{{ user.username|default:"EXPLORADOR" }}</span></h1>
-        <p>Sua jornada espacial continua...</p>
 
         <div class="btn-group">
-            <a href="{% url 'pagina_inicial' %}" class="btn-primary">ACESSAR PAINEL</a>
             
             <form action="{% url 'logout' %}" method="post" style="display: inline;">
                 {% csrf_token %}
@@ -142,7 +140,6 @@
         margin-bottom: 30px;
     }
 
-    /* BOTÕES */
     .btn-group {
         display: flex;
         gap: 15px;
@@ -173,6 +170,10 @@
         font-size: 1rem;
         cursor: pointer;
         transition: 0.3s;
+        gap: 15px;
+        justify-content: center;
+
+        
     }
 
     .btn-primary:hover { 
