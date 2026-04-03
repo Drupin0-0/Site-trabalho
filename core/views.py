@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model 
 from .forms import CadastroForm, LoginForm
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -53,3 +54,11 @@ def logout_view(request):
 
 def home_view(request):
     return render(request, 'core/home.html')
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        messages.success(request, "Sua conta foi excluída com sucesso.")
+        return redirect('pagina_inicial') 

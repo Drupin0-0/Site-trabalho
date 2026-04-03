@@ -10,10 +10,15 @@
         <h1>BEM-VINDO, <span>{{ user.username|default:"EXPLORADOR" }}</span></h1>
 
         <div class="btn-group">
-            
             <form action="{% url 'logout' %}" method="post" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn-secondary">SAIR DA CONTA</button>
+            </form>
+
+            <form action="{% url 'delete_account' %}" method="post" style="display: inline;" 
+                  onsubmit="return confirm('ATENÇÃO: Você tem certeza que deseja deletar sua conta permanentemente?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary btn-delete">DELETAR CONTA</button>
             </form>
         </div>
     </div>
@@ -133,29 +138,12 @@
         text-shadow: 0 0 20px rgba(94, 144, 241, 0.5);
     }
 
-    p {
-        color: rgba(255, 255, 255, 0.6);
-        letter-spacing: 2px;
-        margin-top: 10px;
-        margin-bottom: 30px;
-    }
-
     .btn-group {
         display: flex;
         gap: 15px;
         justify-content: center;
         align-items: center;
-    }
-
-    .btn-primary {
-        background: #5e90f1;
-        color: white;
-        padding: 12px 25px;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-        border: none;
-        transition: 0.3s;
+        margin-top: 30px;
     }
 
     .btn-secondary {
@@ -170,16 +158,11 @@
         font-size: 1rem;
         cursor: pointer;
         transition: 0.3s;
-        gap: 15px;
-        justify-content: center;
-
-        
     }
 
-    .btn-primary:hover { 
-        background: #4a76c9; 
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(94, 144, 241, 0.4);
+    /* Estilo adicional para o botão de deletar (opcional) */
+    .btn-delete {
+        opacity: 0.8;
     }
 
     .btn-secondary:hover { 
@@ -187,6 +170,7 @@
         color: white; 
         transform: translateY(-3px);
         box-shadow: 0 5px 15px rgba(255, 77, 77, 0.4);
+        opacity: 1;
     }
 
     /* ANIMAÇÕES */
